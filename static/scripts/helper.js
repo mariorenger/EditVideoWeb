@@ -98,7 +98,27 @@ function buildVideoResourceByPath(path, title, baseDuration = 0) {
  */
  function buildVideoResourceByFile(file, title, baseDuration = 0) {
   const video = document.createElement('video')
-  video.src = URL.createObjectURL(file)
+  
+  /* Send file to server and save it in server */
+  var formData = new FormData(); // create form object
+  formData.append('file', file, file.name); // add file to form
+
+  var xhr = new XMLHttpRequest();
+  xhr.open('POST', '/upload', true);
+
+  xhr.onload = function () {
+    if (xhr.status == 200) {
+      console.log("Success");
+    } else {
+      console.log("Error");
+    }
+  };
+
+  xhr.send(formData); // send data
+  /* End */
+
+  // video.src = URL.createObjectURL(file)
+  video.src = "/static/uploads/" + file.name;
   video.id = getUniqueID()
   
   return {

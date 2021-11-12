@@ -203,15 +203,6 @@ window.onload = () => {
   })*/
 }
 
-
-
-
-
-
-
-
-
-
 /**
  * Method for rendering the playback
  * bar on the timeline canvas
@@ -227,11 +218,6 @@ function renderCurrentPlaybackBar(videoNode) {
   
   timelinePlaybackBar.style.left = `${window.currentPlaybackTime}px`
 }
-
-
-
-
-
 
 function cancelTrimming() {
   modal = document.querySelector('#trim-modal')
