@@ -872,7 +872,6 @@ function renderFinishVideo(){
     };
 
     xhr.send(formData); // send data
-    /* End */
   }
 }
 

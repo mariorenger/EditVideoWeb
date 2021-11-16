@@ -237,28 +237,6 @@
       </div>
     </div>
     
-    <!-- -----new code------------->
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-  
-	<script type=text/javascript>
-		$(function() {
-		  $('button#test').on('click', function(e) {
-		    console.log( $("div.timeline").html() );
-		    e.preventDefault()
-		    $.getJSON('/get_time',{
-			a: $("div.timeline").html()
-	      		},
-		        function(data) {
-		      //do nothing
-		    });
-		    return false;
-		  });
-		});
-	</script> 
-	
-	
-	<!-- -----end code------------->
-    
     <script src="static/scripts/lib/jquery-1.12.4.min.js"></script>
     <script src="static/scripts/lib/jquery-ui.min.js"></script>
     <script defer src="static/scripts/lib/jquery.ui.touch-punch.min.js"></script>
