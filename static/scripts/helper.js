@@ -844,28 +844,27 @@ function renderFinishVideo(){
     loadingWrapper.classList.remove('loading-wrapper')
     loadingWrapper.classList.add('loading-wrapper-active')
 
-    progressBar.ldBar.set(0)
+    progressBar.ldBar.set(50)
     
-    xhr.addEventListener("progress", updateProgress);
-    
-    document.getElementById('start-render').style.display = 'none'
+    document.getElementById('start-render').style.display = 'none' // hidden button render
 
     // progress on transfers from the server to the client (downloads)
-    function updateProgress (oEvent) {
-      if (oEvent.lengthComputable) {
-        let percentComplete = oEvent.loaded / oEvent.total * 100;
-        progressBar.ldBar.set(percentComplete)
-      } else {
-        // Unable to compute progress information since the total size is unknown
-      }
-    }
+    // xhr.addEventListener("progress", updateProgress);
+    // function updateProgress (oEvent) {
+    //   if (oEvent.lengthComputable) {
+    //     let percentComplete = oEvent.loaded / oEvent.total * 100;
+    //     progressBar.ldBar.set(percentComplete)
+    //   } else {
+    //     // Unable to compute progress information since the total size is unknown
+    //   }
+    // }
 
     xhr.onload = function () {
       if (xhr.status == 200) {
-        document.getElementById('video-result').src = '/static/result/1.mp4'
+        document.getElementById('video-result').src = '/static/result/1.mp4' // result video alway in this src
 
         progressBar.remove()
-        document.getElementById('download-button').style.display = ''
+        document.getElementById('download-button').style.display = '' // show button download
         console.log("Success");
       } else {
         console.log("Error");
