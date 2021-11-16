@@ -147,6 +147,12 @@ window.onload = () => {
   closeModalBtn.addEventListener('click', closeModal)
   donePreview.addEventListener('click' , donePreviewClicked)
 
+  renderBtn = document.querySelector('#start-render')
+  renderBtn.addEventListener('click', renderFinishVideo)
+
+  downloadBtn = document.querySelector('#download-button')
+  downloadBtn.addEventListener('click', downloadVideoResult)
+
   logText = document.getElementById('load-logs')
   progressBar = document.getElementById('progress-bar')
   loadingWrapper = document.querySelector('.loading-wrapper')

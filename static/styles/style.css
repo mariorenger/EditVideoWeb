@@ -893,7 +893,24 @@ video::-webkit-media-controls {
     padding-top: 10px;
     padding-left: 20px;
     padding-right: 20px;
-    cursor: not-allowed;
+    cursor: pointer;
+    transition: 0.5s;
+
+}
+
+#download-button {
+    position: absolute;
+    bottom: 5%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #3e3a3a;
+    border: none;
+    color:#e4e4e4;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    cursor: pointer;
     transition: 0.5s;
 
 }

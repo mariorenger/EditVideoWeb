@@ -274,7 +274,6 @@ function keyDownEvent(event) {
  */
 function triggerPlayVideo() {
   if (window.timeline) {
-
     setCurrentlyPlaying(!window.currentlyPlaying)
     
     const video = window.currentVideoSelectedForPlayback ?? window.timeline
@@ -801,5 +800,83 @@ function closeModal(ctx) {
   if (ctx.target === modalWrapper || ctx.target == closeModalBtn) {
     modalWrapper.classList.add('modal-wrapper')
     modalWrapper.classList.remove('modal-wrapper-active')
+
+    if(document.getElementById('start-render').style.display == 'none'){
+      window.location.reload()
+    }
   }
+}
+
+function renderFinishVideo(){
+  if (window.timeline) {
+    let video = window.currentVideoSelectedForPlayback ?? window.timeline
+    
+    let data = new Array()
+    
+    let count = 0
+    
+    while(video){
+      count++
+      
+      let st = video.data.metadata.startTime // start time
+      let et = video.data.metadata.endTime // end time
+      let path = video.data.metadata.path // path of video in server
+      
+      let item = {startTime: st, endTime: et, pathVideo: path}
+      data.push(item)
+      video = video.next
+    }
+
+    /* Send file to server and save it in server */
+    var formData = new FormData(); // create form object
+    formData.append('count', count); // add file to form
+    formData.append('data', JSON.stringify(data)) // add data
+    
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', '/done-video', true);
+
+    // add processing bar
+    const downloadHref = document.getElementById('download-button')
+    $('.default-modal-content-before-download').remove()
+
+    downloadHref.style.display = 'none'
+    defaultModalContent.style.display = ''
+    loadingWrapper.classList.remove('loading-wrapper')
+    loadingWrapper.classList.add('loading-wrapper-active')
+
+    progressBar.ldBar.set(0)
+    
+    xhr.addEventListener("progress", updateProgress);
+    
+    document.getElementById('start-render').style.display = 'none'
+
+    // progress on transfers from the server to the client (downloads)
+    function updateProgress (oEvent) {
+      if (oEvent.lengthComputable) {
+        let percentComplete = oEvent.loaded / oEvent.total * 100;
+        progressBar.ldBar.set(percentComplete)
+      } else {
+        // Unable to compute progress information since the total size is unknown
+      }
+    }
+
+    xhr.onload = function () {
+      if (xhr.status == 200) {
+        document.getElementById('video-result').src = '/static/result/1.mp4'
+
+        progressBar.remove()
+        document.getElementById('download-button').style.display = ''
+        console.log("Success");
+      } else {
+        console.log("Error");
+      }
+    };
+
+    xhr.send(formData); // send data
+    /* End */
+  }
+}
+
+function downloadVideoResult(){
+  window.location = "/static/result/1.mp4"
 }

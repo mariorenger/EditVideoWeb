@@ -210,9 +210,8 @@
             <img class="modal-placeholder-img" src="static/resources/loadingFFmpeg.png" />
           </div>
           <div class="default-modal-content" style="display: none">
-            <span id="modal-title">Ready to start rendering</span>
-            <p>Have at least one video dragged on the timeline</p>
-            <img class="modal-placeholder-img" src="static/resources/beginRender2.png" />
+            <span id="modal-title">Waiting when video rendering</span>
+            <video class="modal-placeholder-img" id="video-result" src="" ></video> <!--static/resources/beginRender2.png-->
           </div>
           <div class="loading-wrapper">
             <div id="progress-bar" 
@@ -223,7 +222,7 @@
             </div>
             <p id="load-logs">
             </p>
-            <a target="_blank" id="download-button">Download</a>
+            <button id="download-button">Download</button>
           </div>
           
           <button id="start-render">Render</button>
