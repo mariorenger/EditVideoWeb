@@ -827,11 +827,14 @@ function renderFinishVideo(){
       video = video.next
     }
 
+    let volume = document.getElementById('range-volume').value
+
     /* Send file to server and save it in server */
     var formData = new FormData(); // create form object
     formData.append('count', count); // add file to form
     formData.append('data', JSON.stringify(data)) // add data
-    
+    formData.append('volume', volume) // add volume data
+
     var xhr = new XMLHttpRequest();
     xhr.open('POST', '/done-video', true);
 

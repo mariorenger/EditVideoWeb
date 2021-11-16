@@ -17,3 +17,4 @@ def mix(clips, path):
 def mirror(clip, path):
     final_video = clip.fx(vfx.mirror_x)
     final_video.write_videofile(path)
+

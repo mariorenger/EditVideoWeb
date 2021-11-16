@@ -43,16 +43,17 @@ def done_video():
 	if request.method == "POST" :
 		cnt = request.form['count']
 		data = request.form['data']
-		
+		volume = int(request.form['volume']) # volume of all sub video
+
 		rdata = json.loads(data)
 		videopys = []
 
 		for item in rdata: 
-			st = int(item['startTime'])
-			et = int(item['endTime'])
+			st = float(item['startTime'])
+			et = float(item['endTime'])
 			path = item['pathVideo'].replace("http://127.0.0.1:5000/", "") # remove protocal and get relative path of video
 
-			video = Video(st, et, path)
+			video = Video(st, et, path, volume)
 			videopy = video.finish_video()
 			videopys.append(videopy)
 		
