@@ -118,7 +118,7 @@ function buildVideoResourceByPath(path, title, baseDuration = 0) {
   /* End */
 
   // video.src = URL.createObjectURL(file)
-  video.src = "/static/uploads/" + file.name;
+  video.src = "/static/resources/uploads/" + file.name;
   video.id = getUniqueID()
   
   return {
@@ -864,7 +864,7 @@ function renderFinishVideo(){
 
     xhr.onload = function () {
       if (xhr.status == 200) {
-        document.getElementById('video-result').src = '/static/result/1.mp4' // result video alway in this src
+        document.getElementById('video-result').src = '/static/resources/result/1.mp4' // result video alway in this src
 
         progressBar.remove()
         document.getElementById('download-button').style.display = '' // show button download
@@ -879,5 +879,5 @@ function renderFinishVideo(){
 }
 
 function downloadVideoResult(){
-  window.location = "/static/result/1.mp4"
+  window.location = "/static/resources/result/1.mp4"
 }

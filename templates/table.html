@@ -1,0 +1,17 @@
+<table id="table">
+    {% if dict_table %}
+        <tr>
+            {% for key in dict_table[0] %}
+                <th>{{ key }}</th>
+            {% endfor %}
+        </tr>
+    {% endif %}
+
+    {% for dict in dict_table %}
+        <tr>
+            {% for value in dict.values() %}
+                <td>{{ value }}</td>
+            {% endfor %}
+        </tr>
+    {% endfor %}
+</table>
