@@ -1,4 +1,4 @@
-from tinkerer import *
+#from tinkerer import *
 from moviepy.editor import *
 
 # clip1 = VideoFileClip("/home/trannguyenhan/Videos/untitled.mp4")

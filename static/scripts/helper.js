@@ -417,6 +417,7 @@ async function fileUpload({ target: { files } }) {
   for (const file of files) {
     const videoResource = buildVideoResourceByFile(file, file.name)
     window.resources[videoResource.videoCore.id] = videoResource
+    console.log(videoResource)
     renderResourceBlock(videoResource.videoCore)
   }
   
