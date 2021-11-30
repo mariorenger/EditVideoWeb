@@ -10,11 +10,9 @@ import json
 app = Flask(__name__)
 
 PROJECT_HOME = os.path.dirname(os.path.realpath(__file__))
-UPLOAD_FOLDER = '{}/static/uploads/'.format(PROJECT_HOME)
-RESULT_FOLDER = '{}/static/result/'.format(PROJECT_HOME)
+UPLOAD_FOLDER = '{}/static/resources/uploads/'.format(PROJECT_HOME)
 
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-app.config['RESULT_FOLDER'] = RESULT_FOLDER
 
 @app.route("/")
 def home():
