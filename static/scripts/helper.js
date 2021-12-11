@@ -119,6 +119,7 @@ function buildVideoResourceByPath(path, title, baseDuration = 0) {
 
   // video.src = URL.createObjectURL(file)
   video.src = "/static/resources/uploads/" + file.name;
+  //video.src = "{{ url_for('static', filename='/resources/uploads/"+file.name+"') }}";
   video.id = getUniqueID()
   
   return {
@@ -196,13 +197,14 @@ function playVideo(videoTimeline) {
 
         /* Updating the window.currentVideoSelectedForPlayback variable */
         window.currentVideoSelectedForPlayback = timelineNode
+        console.log(window.currentVideoSelectedForPlayback.data.videoCore.textTracks[0].cues[0].text)
 
         /* Playing the next frame */
         playVideo(timelineNode)
       }
     } else {
       /* Updating the UI */
-      renderUIAfterFrameChange(videoTimeline)
+      renderUIAfterFrameChange(videoTimeline, '')
 
       /* Drawing at 30fps (1000 / 30 = 33,3333..)*/
       setTimeout(loop, 33.3333333) 
@@ -292,7 +294,7 @@ function triggerPlayVideo() {
  * and updates the preview canvas 
  * @param video TimelineNode element
  */
-function renderUIAfterFrameChange(videoNode) {
+function renderUIAfterFrameChange(videoNode, text) {
 
   const video = videoNode.data.videoCore
 
@@ -330,6 +332,14 @@ function renderUIAfterFrameChange(videoNode) {
     context.drawImage(
       video, canvas.width / 2 - videoRatio * canvas.height / 2, 0, videoRatio * canvas.height, canvas.height
     ) 
+    context.font = "60pt Impact"
+    context.textAlign = "center"
+    console.log(text)
+
+    context.fillText(text, canvas.width / 2 - videoRatio * canvas.height / 2 + videoRatio * canvas.height/2, canvas.height-20)
+
+	
+	
   } else if (videoNode.data.metadata.ratio == 'strech') {
     if (window.currentRatio === 'fit') {
       document.querySelector('.toogle-strech').click()
@@ -337,6 +347,11 @@ function renderUIAfterFrameChange(videoNode) {
     context.drawImage(
       video, 0, 0, canvas.width, canvas.height
     )
+    context.font = "60pt Impact"
+    context.textAlign = "center"
+    console.log('Đây là sub title')
+
+    context.fillText('Đây là sub title', canvas.width / 2 - videoRatio * canvas.height / 2 + videoRatio * canvas.height/2, canvas.height-20)
   }
 }
 
@@ -378,7 +393,7 @@ function backButtonTrigger() {
     } else {
       window.currentVideoSelectedForPlayback.data.videoCore.currentTime = currentVideoStart
     }
-    renderUIAfterFrameChange(window.currentVideoSelectedForPlayback)
+    renderUIAfterFrameChange(window.currentVideoSelectedForPlayback, '')
   }
 }
 
@@ -404,7 +419,7 @@ function forwardButtonTrigger() {
     } else {
       window.currentVideoSelectedForPlayback.data.videoCore.currentTime = currentVideoEnd
     }
-    renderUIAfterFrameChange(window.currentVideoSelectedForPlayback)
+    renderUIAfterFrameChange(window.currentVideoSelectedForPlayback, '')
   }
 }
 
