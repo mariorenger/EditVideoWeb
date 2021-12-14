@@ -170,6 +170,12 @@ function playVideo(videoTimeline) {
   const timelineNode = videoTimeline.next
   const video = videoTimeline.data.videoCore
   const videoEndTime = videoTimeline.data.metadata.endTime
+
+  textTracks = window.currentVideoSelectedForPlayback.data.videoCore.textTracks
+  let listCueTextTracks = null;
+  if(textTracks.length != 0){
+    listCueTextTracks = textTracks[0].cues
+  }
   
   loop = () => {
     if (!window.currentlyPlaying) {
@@ -196,14 +202,28 @@ function playVideo(videoTimeline) {
 
         /* Updating the window.currentVideoSelectedForPlayback variable */
         window.currentVideoSelectedForPlayback = timelineNode
-        console.log(window.currentVideoSelectedForPlayback.data.videoCore.textTracks[0].cues[0].text)
 
         /* Playing the next frame */
         playVideo(timelineNode)
       }
     } else {
+      // get list track will run in this time
+      // if this time between startTime and endTime of cue
+      let listText = [];
+      if(listCueTextTracks != null){
+          for(let cueText of listCueTextTracks){
+            if(cueText.startTime <= video.currentTime && cueText.endTime >= video.currentTime){
+              listText.push(cueText.text)
+            }
+          }
+      }
+      
       /* Updating the UI */
-      renderUIAfterFrameChange(videoTimeline, '')
+      if(listText.length == 0){
+        renderUIAfterFrameChange(videoTimeline, null)  
+      } else {
+        renderUIAfterFrameChange(videoTimeline, listText)
+      }
 
       /* Drawing at 30fps (1000 / 30 = 33,3333..)*/
       setTimeout(loop, 33.3333333) 
@@ -293,7 +313,7 @@ function triggerPlayVideo() {
  * and updates the preview canvas 
  * @param video TimelineNode element
  */
-function renderUIAfterFrameChange(videoNode, text) {
+function renderUIAfterFrameChange(videoNode, listText) {
 
   const video = videoNode.data.videoCore
 
@@ -331,14 +351,6 @@ function renderUIAfterFrameChange(videoNode, text) {
     context.drawImage(
       video, canvas.width / 2 - videoRatio * canvas.height / 2, 0, videoRatio * canvas.height, canvas.height
     ) 
-    context.font = "60pt Impact"
-    context.textAlign = "center"
-    console.log(text)
-
-    context.fillText(text, canvas.width / 2 - videoRatio * canvas.height / 2 + videoRatio * canvas.height/2, canvas.height-20)
-
-	
-	
   } else if (videoNode.data.metadata.ratio == 'strech') {
     if (window.currentRatio === 'fit') {
       document.querySelector('.toogle-strech').click()
@@ -346,12 +358,19 @@ function renderUIAfterFrameChange(videoNode, text) {
     context.drawImage(
       video, 0, 0, canvas.width, canvas.height
     )
-    context.font = "60pt Impact"
-    context.textAlign = "center"
-    console.log('Đây là sub title')
-
-    context.fillText('Đây là sub title', canvas.width / 2 - videoRatio * canvas.height / 2 + videoRatio * canvas.height/2, canvas.height-20)
   }
+
+  context.font = "30pt Impact"
+  context.textAlign = "center"
+  // for(let text of listText){
+  //   context.fillText(text, canvas.width / 2 - videoRatio * canvas.height / 2 + videoRatio * canvas.height/2, canvas.height-20)
+  // } 
+  text = ""
+  if(listText != null){
+    text = listText[0]
+  }
+  
+  context.fillText(text, canvas.width / 2 - videoRatio * canvas.height / 2 + videoRatio * canvas.height/2, canvas.height-20)
 }
 
 
@@ -879,15 +898,16 @@ function renderFinishVideo(){
 
     progressBar.ldBar.set(75)
     
+    // return video result
     xhr.onload = function () {
       if (xhr.status == 200) {
         document.getElementById('video-result').src = '/static/resources/result.mp4' // result video alway in this src
 
         progressBar.remove()
         document.getElementById('download-button').style.display = '' // show button download
-        console.log("Success");
+        console.log("Success")
       } else {
-        console.log("Error");
+        console.log("Error")
       }
     };
 
