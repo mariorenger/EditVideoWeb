@@ -55,7 +55,7 @@ def done_video():
 			videopy = video.finish_video()
 			videopys.append(videopy)
 		
-		handle_video.mix(videopys, 'static/resources/result/1.mp4')
+		handle_video.mix(videopys, 'static/resources/result.mp4')
 
 	return "Success"	
 

@@ -863,7 +863,7 @@ function renderFinishVideo(){
     loadingWrapper.classList.remove('loading-wrapper')
     loadingWrapper.classList.add('loading-wrapper-active')
 
-    progressBar.ldBar.set(50)
+    progressBar.ldBar.set(99)
     
     document.getElementById('start-render').style.display = 'none' // hidden button render
 
@@ -880,7 +880,7 @@ function renderFinishVideo(){
 
     xhr.onload = function () {
       if (xhr.status == 200) {
-        document.getElementById('video-result').src = '/static/resources/result/1.mp4' // result video alway in this src
+        document.getElementById('video-result').src = '/static/resources/result.mp4' // result video alway in this src
 
         progressBar.remove()
         document.getElementById('download-button').style.display = '' // show button download
@@ -895,5 +895,5 @@ function renderFinishVideo(){
 }
 
 function downloadVideoResult(){
-  window.location = "/static/resources/result/1.mp4"
+  window.location = "/static/resources/result.mp4"
 }
