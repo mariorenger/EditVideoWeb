@@ -1,6 +1,6 @@
 /*
   Helper functions for rendering the
-  editting UI and parsing data for transcoding.
+  editing UI and parsing data for transcoding.
 */
 
 /* Compatible video types (will support more in the future) */
@@ -160,7 +160,6 @@ function buildVideoResource(video, title, baseDuration = 0, startTime = 0, endTi
     }
   }
 }
-
 
 /**
  * Method for rendering the current video
@@ -863,7 +862,7 @@ function renderFinishVideo(){
     loadingWrapper.classList.remove('loading-wrapper')
     loadingWrapper.classList.add('loading-wrapper-active')
 
-    progressBar.ldBar.set(99)
+    progressBar.ldBar.set(50)
     
     document.getElementById('start-render').style.display = 'none' // hidden button render
 
@@ -878,6 +877,8 @@ function renderFinishVideo(){
     //   }
     // }
 
+    progressBar.ldBar.set(75)
+    
     xhr.onload = function () {
       if (xhr.status == 200) {
         document.getElementById('video-result').src = '/static/resources/result.mp4' // result video alway in this src

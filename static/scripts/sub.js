@@ -148,6 +148,8 @@ var _dropTarget = document.documentElement;
         }).forEach(function(cue) {
             track.addCue(new VTTCue(cue.start, cue.end, cue.text));
         });
+
+        modal.style.display = "none"; // hidden when click button exportVTT
     });
 
     _progress.on('click', function(event) {
