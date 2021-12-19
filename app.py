@@ -49,16 +49,16 @@ def done_video():
 		for item in rdata: 
 			st = float(item['startTime'])
 			et = float(item['endTime'])
-			path = item['pathVideo'].replace("http://127.0.0.1:5000/", "") # remove protocal and get relative path of video
-
-			video = Video(st, et, path, volume)
+			path = item['pathVideo'].replace("http://127.0.0.1:5000/", "") # remove protocol and get relative path of video
+			tracks = item['track']
+			
+			video = Video(st, et, path, volume, tracks)
 			videopy = video.finish_video()
 			videopys.append(videopy)
 		
-		handle_video.mix(videopys, 'static/resources/result/1.mp4')
+		handle_video.mix(videopys, 'static/resources/result.mp4')
 
 	return "Success"	
 
 if __name__ == "__main__":
     app.run(debug = True)
-
