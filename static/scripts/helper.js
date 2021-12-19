@@ -856,7 +856,18 @@ function renderFinishVideo(){
       let et = video.data.metadata.endTime // end time
       let path = video.data.metadata.path // path of video in server
       
-      let item = {startTime: st, endTime: et, pathVideo: path}
+      // get track of this video
+      let textResults = [];
+      let textTracks = window.currentVideoSelectedForPlayback.data.videoCore.textTracks[0].cues
+			for(let textTrack of textTracks){
+					let startTime = textTrack.startTime
+					let endTime = textTrack.endTime
+					let text = textTrack.text
+					let textItem = {startTime: startTime, endTime: endTime, text: text}
+					textResults.push(textItem)
+			}
+
+      let item = {startTime: st, endTime: et, pathVideo: path, track: textResults}
       data.push(item)
       video = video.next
     }
