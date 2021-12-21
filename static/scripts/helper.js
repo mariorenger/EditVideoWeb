@@ -846,7 +846,6 @@ function renderFinishVideo(){
     let video = window.currentVideoSelectedForPlayback ?? window.timeline
     
     let data = new Array()
-    
     let count = 0
     
     while(video){
