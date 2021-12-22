@@ -1,64 +1,44 @@
-from sys import path
 from flask import Flask, render_template, request
-import os
+import json
 
-from werkzeug.utils import send_from_directory
-import handle_video
-from video import *
-import json 
+from controllers.upload_controller import *
+from controllers.done_video_controller import *
 
 app = Flask(__name__)
 
 PROJECT_HOME = os.path.dirname(os.path.realpath(__file__))
 UPLOAD_FOLDER = '{}/static/resources/uploads/'.format(PROJECT_HOME)
-
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 @app.route("/")
 def home():
-    return render_template("index.html")
-    
-# create folder upload if not exists
-def create_new_folder(local_dir):
-    newpath = local_dir
-    if not os.path.exists(newpath):
-        os.makedirs(newpath)
-    return newpath
+	return render_template('index.html')
 
-@app.route("/upload", methods=["POST"])
+@app.route("/upload", methods=["GET", "POST"])
 def uploader():
-	if request.method == "POST" :
-		file = request.files["file"]
-		
-		create_new_folder(app.config['UPLOAD_FOLDER'])
-		saved_path = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
-		file.save(saved_path)
+	controller = UploadController(request.files['file'], app.config['UPLOAD_FOLDER'])
 
-	return "Success"
+	if request.method == "POST" :
+		controller.post()
+	else: 
+		controller.get()
+
+	return "True"
 
 @app.route("/done-video", methods=["POST"])
 def done_video(): 
+	cnt = request.form['count']
+	data = request.form['data']
+	volume = int(request.form['volume']) # volume of all sub video
+	
+	controller = DoneVideoController(json.loads(data), volume)
+
 	if request.method == "POST" :
-		cnt = request.form['count']
-		data = request.form['data']
-		volume = int(request.form['volume']) # volume of all sub video
-
-		rdata = json.loads(data)
-		videopys = []
-
-		for item in rdata: 
-			st = float(item['startTime'])
-			et = float(item['endTime'])
-			path = item['pathVideo'].replace("http://127.0.0.1:5000/", "") # remove protocol and get relative path of video
-			tracks = item['track']
-			
-			video = Video(st, et, path, volume, tracks)
-			videopy = video.finish_video()
-			videopys.append(videopy)
+		controller.get()
+	else : 
+		controller.post()
 		
-		handle_video.mix(videopys, 'static/resources/result.mp4')
-
-	return "Success"	
+	return "True"
 
 if __name__ == "__main__":
     app.run(debug = True)

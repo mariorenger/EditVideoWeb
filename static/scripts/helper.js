@@ -846,7 +846,6 @@ function renderFinishVideo(){
     let video = window.currentVideoSelectedForPlayback ?? window.timeline
     
     let data = new Array()
-    
     let count = 0
     
     while(video){
@@ -858,14 +857,18 @@ function renderFinishVideo(){
       
       // get track of this video
       let textResults = [];
-      let textTracks = window.currentVideoSelectedForPlayback.data.videoCore.textTracks[0].cues
-			for(let textTrack of textTracks){
-					let startTime = textTrack.startTime
-					let endTime = textTrack.endTime
-					let text = textTrack.text
-					let textItem = {startTime: startTime, endTime: endTime, text: text}
-					textResults.push(textItem)
-			}
+      cntTextTracks = window.currentVideoSelectedForPlayback.data.videoCore.textTracks.length
+      
+      if(cntTextTracks != 0){
+        let textTracks = window.currentVideoSelectedForPlayback.data.videoCore.textTracks[0].cues
+        for(let textTrack of textTracks){
+            let startTime = textTrack.startTime
+            let endTime = textTrack.endTime
+            let text = textTrack.text
+            let textItem = {startTime: startTime, endTime: endTime, text: text}
+            textResults.push(textItem)
+        }
+      }
 
       let item = {startTime: st, endTime: et, pathVideo: path, track: textResults}
       data.push(item)
