@@ -12,7 +12,7 @@ pip3 install jupyterlab-pygments
 pip3 install jupyter-client
 pip3 install moviepy
 ```
-### Install Imagemagic: 
+### Install Imagemagick: 
 ```
 sudo apt install imagemagick
 ```
