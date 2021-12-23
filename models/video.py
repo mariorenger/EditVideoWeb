@@ -36,10 +36,9 @@ class Video:
                 for track in self._tracks: 
                     starttime = track.get_starttime()
                     duration = track.get_duration()
-                    text = str(track.get_text())
-                    
-                    # text_clip = TextClip(text, fontsize=30, color='red').set_position('bottom', 'center').set_duration(duration)
-                    # result = CompositeVideoClip([result, text_clip])
+                    text = str(track.get_text().encode('utf8').decode('utf8'))
+                    text_clip = TextClip(text, font='FreeMono', fontsize=40).set_position(('center', 0.9), relative=True).set_duration(duration)
+                    result = CompositeVideoClip([result, text_clip])
                     print(starttime)
                     print(duration)
                     print(text)
