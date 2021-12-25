@@ -1,5 +1,5 @@
 # edit-video
-
+## Simple version
 ### Install Flask: 
 ```
 pip3 install Flask
@@ -19,4 +19,14 @@ sudo apt install imagemagick
 ### run: 
 ```
 python app.py
+```
+##Docker version
+### Build images
+```
+docker build -t tg3h/editvideo:1.0 .
+```
+
+### Run app
+```
+docker-compose up -d
 ```
