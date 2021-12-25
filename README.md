@@ -20,7 +20,7 @@ sudo apt install imagemagick
 ```
 python app.py
 ```
-##Docker version
+## Docker version
 ### Build images
 ```
 docker build -t tg3h/editvideo:1.0 .
